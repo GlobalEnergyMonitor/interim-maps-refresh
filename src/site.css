@@ -321,7 +321,8 @@ table.dataTable td {
 }
 
 .modal-content {
-    border-width: 0px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background-color: #f2f2eb;
 }
 .modal-body {
     padding: 0px;
@@ -357,29 +358,49 @@ table.dataTable td {
 
 .detail-location {
     float: right;
-    background-color: rgba(151, 151, 151, 0.628);
+    background-color: rgba(0, 36, 48, 0.65);
+    color: #ffffff;
+    font-family: 'Barlow Semi Condensed', Arial, sans-serif;
     position: relative;
     top: 4px;
     padding: 5px;
+    border-radius: 0 5px 5px;
 }
 #detail-more-info {
     position: absolute;
     bottom: 10px;
     right: 10px;
-    background-color: white;
+    background-color: #016b83;
+    border-radius: 0 8px 8px;
+    transition: background-color 0.15s;
+}
+#detail-more-info:hover {
+    background-color: #004a63;
 }
 #detail-more-info a {
     text-decoration: none;
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 11px;
 }
 #detail-all-phases {
     position: absolute;
     bottom: 10px;
-    right: 80px;
-    background-color: white;
+    right: 90px;
+    background-color: #016b83;
+    border-radius: 0 8px 8px;
+    transition: background-color 0.15s;
+}
+#detail-all-phases:hover {
+    background-color: #004a63;
 }
 #detail-all-phases a {
     text-decoration: none;
-    color: black;
+    color: #ffffff;
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 11px;
     cursor: pointer;
 }
 #detail-total-units {
@@ -571,10 +592,69 @@ table.dataTable td {
 }
 
 #all-select-section-level{
-    /* lower opacity and smaller size */
     opacity:.7;
     font-size: 11px;
     text-transform: lowercase;
-    /*add some more padding around the text */
     padding: 8px 8px;
+}
+
+/* ── Filter panel ── */
+.sidebar.card {
+    background-color: #f2f2eb;
+    border: 1px solid rgba(0,0,0,0.1);
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    color: #3a4a50;
+}
+
+#filter-form h7 {
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    font-weight: 700;
+    color: #3a4a50;
+    font-size: 13px;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 2px;
+    text-transform: capitalize;
+}
+
+.filter-row {
+    padding: 3px 2px;
+    border-radius: 0 5px 5px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+.filter-row:hover {
+    background-color: #e6e6dc;
+}
+
+#all-select a,
+#all-select-section-level a {
+    color: #016b83;
+    text-decoration: none;
+    font-weight: 600;
+}
+#all-select a:hover,
+#all-select-section-level a:hover {
+    color: #004a63;
+    text-decoration: underline;
+}
+
+/* ── Detail popup right panel ── */
+#total_in_view {
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    color: #3a4a50;
+    font-size: 14px;
+}
+
+/* ── Multiple-asset select list ── */
+.asset-select-option {
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    color: #3a4a50;
+    padding: 6px 12px;
+    border-radius: 0 5px 5px;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+.asset-select-option:hover {
+    background-color: #e6e6dc;
 }
