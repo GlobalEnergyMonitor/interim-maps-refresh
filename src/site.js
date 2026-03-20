@@ -443,7 +443,7 @@ function addPolygonLayers() {
         ],
         ...('tileSourceLayer' in config && {'source-layer': config.tileSourceLayer}),
         'layout': { ...(config.polygonLayout || {}) },
-        'paint': { ...paint, 'fill-color': '#FFEA00' },
+        'paint': { ...paint, 'fill-color': '#9df7e5' },
     });
     map.addLayer({
         'id': 'assets-polygons-outline-highlighted',
@@ -455,7 +455,7 @@ function addPolygonLayers() {
         ],
         ...('tileSourceLayer' in config && {'source-layer': config.tileSourceLayer}),
         'layout': { ...(config.lineLayout || {}) },
-        'paint': { ...outlinePaint, 'line-color': '#FFEA00' },
+        'paint': { ...outlinePaint, 'line-color': '#9df7e5' },
     });
 }
 
@@ -510,7 +510,7 @@ function addLineLayers() {
     config.layers.push('assets-lines');
 
     // Add highlight layer
-    let highlightPaint = { ...paint, 'line-color': '#FFEA00' };
+    let highlightPaint = { ...paint, 'line-color': '#9df7e5' };
     map.addLayer({
         'id': 'assets-lines-highlighted',
         'type': 'line',
@@ -637,7 +637,7 @@ function addPointLayers() {
     config.layers.push('assets-symbol');
 
     // Add highlight layers
-    paint['circle-color'] = '#FFEA00';
+    paint['circle-color'] = '#9df7e5';
     map.addLayer({
         'id': 'assets-points-highlighted',
         'type': 'circle',

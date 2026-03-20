@@ -11,8 +11,8 @@ body {
 }
 
 #table-container, .page-link {
-    font-family: Arial;
-    color: rgb(33,37,41);
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    color: #3a4a50;
     font-size: 12px;
 }
 #table-container {
@@ -34,7 +34,7 @@ table.dataTable>tbody>tr.odd {
    background-color: rgba(0,0,0,0.05);
 }
 table.dataTable>tbody>tr {
-   border-top: 1pt solid rgb(33,37,41);
+   border-top: 1pt solid #3a4a50;
 }
 table.dataTable>tbody>tr:hover {
    background-color: #e9e9e9;
@@ -44,7 +44,7 @@ table.dataTable td {
 }
 
 .map-overlay {
-    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+    font: 12px/20px 'Barlow Semi Condensed', Arial, sans-serif;
     position: absolute;
     width: 250px;
     top: 0;
@@ -91,7 +91,7 @@ table.dataTable td {
 }
 
 .map-overlay input[type='checkbox']+label {
-    background-color: #3386c0;
+    background-color: #016b83;
     display: block;
     cursor: pointer;
     font-weight: bold;
@@ -102,13 +102,13 @@ table.dataTable td {
 }
 
 .map-overlay input[type='checkbox']+label {
-    background-color: #3386c0;
+    background-color: #016b83;
     text-transform: capitalize;
 }
 
 .map-overlay input[type='checkbox']+label:hover,
 .map-overlay input[type='checkbox']:checked+label {
-    background-color: #4ea0da;
+    background-color: #004a63;
 }
 
 .map-overlay input[type='checkbox']:checked+label:before {
@@ -223,7 +223,7 @@ table.dataTable td {
 #search-type {
     position: relative;
     top: 3px;
-    font-family: 'Familjen Grotesk';
+    font-family: 'Plus Jakarta Sans';
 }
 
 
@@ -273,22 +273,22 @@ table.dataTable td {
 
 #country {
     min-width:318px;
-    font-family: 'Familjen Grotesk';
+    font-family: 'Plus Jakarta Sans';
 }
 
 .shadow-sm{box-shadow:0 .125rem .25rem rgba(0,0,0,.35)!important}
 
 .rounded-top-left-1 {
-    border-top-left-radius: 1rem;
+    border-top-left-radius: 10px;
 }
 .rounded-top-right-1 {
-    border-top-right-radius: 1rem;
+    border-top-right-radius: 10px;
 }
 .rounded-bottom-left-1 {
-    border-bottom-left-radius: 1rem;
+    border-bottom-left-radius: 10px;
 }
 .rounded-bottom-right-1 {
-    border-bottom-right-radius: 1rem;
+    border-bottom-right-radius: 10px;
 }
 
 /* Checkbox by Chinnaking from <a href="https://thenounproject.com/browse/icons/term/checkbox/" target="_blank" title="Checkbox Icons">Noun Project</a> (CC BY 3.0) */
@@ -326,7 +326,7 @@ table.dataTable td {
 .modal-body {
     padding: 0px;
     min-height: 150px;
-    color: #000000;
+    color: #3a4a50;
 }
 .modal-body ul {
     list-style: none;
@@ -348,7 +348,7 @@ table.dataTable td {
     font-weight: bold;
     padding-right: 0px;
     position: relative;
-    font-family: 'Familjen Grotesk';
+    font-family: 'Plus Jakarta Sans';
     min-height: 250px;
 }
 #detail-location-pin {
@@ -461,11 +461,10 @@ table.dataTable td {
 
 #btn-spin {
     font:
-        bold 12px/20px 'Helvetica Neue',
+        bold 12px/20px 'Barlow Semi Condensed',
         Arial,
-        Helvetica,
         sans-serif;
-    background-color: #3386c0;
+    background-color: #016b83;
     color: #fff;
     position: relative;
     /* visibility: visible; */
@@ -489,11 +488,10 @@ table.dataTable td {
     top: 10px; /* keep this */ 
     left: 10px;
     font:
-        bold 12px/20px 'Helvetica Neue',
+        bold 12px/20px 'Barlow Semi Condensed',
         Arial,
-        Helvetica,
         sans-serif;
-    background-color: #3386c0;
+    background-color: #016b83;
     color: #fff;
     /* right: 30%; */
     display: block; 
@@ -506,7 +504,7 @@ table.dataTable td {
 
 
 #btn-spin-toggle:hover {
-    background-color: #4ea0da;
+    background-color: #004a63;
 }
 
 
@@ -524,7 +522,7 @@ table.dataTable td {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgb(2, 2, 174);
+    border: 1px solid #016b83;
     border-radius: 50%;
     width: 1em;
     height: 1em;
@@ -533,7 +531,7 @@ table.dataTable td {
     text-transform: lowercase;
     line-height: 1;
     font-size: 12px;
-    color: rgb(2, 2, 174);
+    color: #016b83;
     left: 3px;
     top: -3px;
 }
@@ -543,7 +541,7 @@ table.dataTable td {
     bottom: 80%;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #6d6a6a;
+    background-color: #3a4a50;
     color: #fff;
     padding: 10px 10px;
     border-radius: 4px;
@@ -569,7 +567,7 @@ table.dataTable td {
     border-width: 5px;
     border-style: solid;
     opacity:1;
-    border-color: #656161 transparent transparent transparent;
+    border-color: #3a4a50 transparent transparent transparent;
 }
 
 #all-select-section-level{
