@@ -13,14 +13,17 @@ var site_config = {
        depending on scale of facilities */
     img_detail_zoom: 15,
 
-    /* Define labels for sitewide colors, referenced in tracker config */
+    /* Define labels for sitewide colors, referenced in tracker config. */
     site_colors: {
         'red': '#ca4a50',
             'light red': '#df8182',
+            'deep red': '#7F142A',
         'orange': '#fe4f2d',
         'yellow': '#f4ca19',
         'green': '#65bd8b',
             'light green': '#9df7e5',
+        'teal': '#016b83',
+            'mint': '#a5e9e4',
         'blue': '#4a57a8',
             'light blue': '#099ed8',
         'purple': '#89549d',
