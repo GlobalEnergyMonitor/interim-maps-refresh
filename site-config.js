@@ -3,7 +3,7 @@ var site_config = {
     accessToken: 'pk.eyJ1IjoiZ2VtdGVhbTEiLCJhIjoiY21la2l0bmQ0MDY1eDJqcHB0cGkyZHh6NyJ9.Mas7dPxjgHVMfdnMvYrJig',
 
     /* Mapbox Base Map Style */
-    mapStyle: 'mapbox://styles/gemteam1/cls98k6sf02li01p2fqtu67lc',
+    mapStyle: 'mapbox://styles/gemteam1/cmnzzk2nz006001sd24oc6ry1',
     center: [0, 0],
     projection: 'naturalEarth',
     baseMap: 'Streets',
