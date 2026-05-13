@@ -1325,7 +1325,7 @@ function displayDetails(features) {
 
     Object.keys(config.detailView).forEach((detail) => {
         const value = features[0].properties[detail];
-        const invalidValues = ['', 'unknown', 'unknown [unknown %]', 'undefined', 'nan', null, 0, []];
+        const invalidValues = ['', 'unknown', 'unknown [unknown %]', 'undefined', 'nan', null, undefined, 0, []];
         if (invalidValues.includes(value) || Number.isNaN(value)) {
             detail_text += ''
         } else if (Object.keys(config.detailView[detail]).includes('display')) {
