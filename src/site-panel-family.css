@@ -126,7 +126,9 @@
     opacity: 0.7;
 }
 
-/* Per-segment text — single inline row "Region: ALL ▾" */
+/* Per-segment text — single inline row "Region: ALL ▾".
+   Tight right padding on dropdown pills so the caret sits flush with the
+   pill edge and there's no visually empty area inside the click target. */
 .navbar.fixed-bottom .nav-link,
 .navbar.fixed-bottom .btn-secondary {
     background: transparent !important;
@@ -145,6 +147,12 @@
     align-items: center !important;
     gap: 6px;
     border-radius: 0 !important;
+}
+/* Bootstrap-lux sets `.nav-item { margin-right: 2rem }`, which leaves a
+   32px non-clickable gap to the right of each navbar pill. Zero it out so
+   the visible pill IS the click target. */
+.navbar.fixed-bottom .nav-item {
+    margin-right: 0 !important;
 }
 .navbar.fixed-bottom #basemap-toggle,
 .navbar.fixed-bottom #projection-toggle,
@@ -303,8 +311,11 @@
     line-height: 1;
     margin-left: 8px;
 }
-/* Divider between "All" and the first continent ("Africa") */
-.navbar.fixed-bottom #country .dropdown-menu > li:first-child {
+/* Divider between "All" and the first continent ("Africa").
+   Scoped to the top-level menu (`#country_select`) only — the previous
+   `#country .dropdown-menu` selector also matched the nested `.submenu`,
+   which gave the first country (e.g. Algeria) a stray underline. */
+.navbar.fixed-bottom #country_select > li:first-child {
     border-bottom: 1px solid rgba(0, 36, 48, 0.08);
     padding-bottom: 6px;
     margin-bottom: 6px;
@@ -382,8 +393,15 @@
 }
 
 #card-body {
-    padding: 14px 16px !important;
+    padding: 10px 16px !important;
     min-width: 320px;
+}
+/* Override Bootstrap's `.pb-3` on #filter-form so the space below the last
+   filter row (Mothballed) matches the space above the first row (Operating).
+   The capacity divider then provides its own 10px above/below. */
+#filter-form.pb-3,
+#filter-form {
+    padding-bottom: 0 !important;
 }
 
 /* Totals row — display number with eyebrow and rule.
@@ -616,8 +634,8 @@
     flex-wrap: nowrap !important;
     align-items: center !important;
     gap: 12px;
-    margin: 1px 0 !important;
-    padding: 4px 8px !important;
+    margin: 0 !important;
+    padding: 3px 8px !important;
     min-height: 24px;
 }
 #capacity_summary_max,
@@ -656,16 +674,21 @@
     align-items: center !important;
     min-height: 18px;
 }
-/* Above the capacity sub-block. The TOTAL summary row already has a
-   border-bottom that serves as the divider; adding another border-top here
-   produces a stacked double-line in the collapsed state (when #filter-form
-   is display:none). Use a single hairline only when filter-form is visible
-   (i.e. expanded) — when collapsed, the TOTAL row's existing border-bottom
-   suffices. */
+/* Capacity sub-block sits below a divider (a hairline when the filter form
+   is expanded, or the TOTAL row's own border when collapsed). Match the
+   10px-above / 10px-below rhythm used at the Total-row divider so all
+   dividers in the card share uniform spacing. */
 #card-body .row:has(#capacity_summary_max) {
-    margin-top: 8px !important;
-    padding-top: 8px !important;
-    padding-bottom: 8px !important;
+    margin-top: 10px !important;
+    padding-top: 10px !important;
+    padding-bottom: 3px !important;
+}
+/* Tight pairing between Max/Min rows — gap stays smaller than the 10px
+   around the dividers so the pair reads as a group. */
+#card-body .row:has(#capacity_summary_min) {
+    margin-top: 0 !important;
+    padding-top: 3px !important;
+    padding-bottom: 0 !important;
 }
 /* Only show the capacity divider when the filter form is sitting between
    the TOTAL row and the capacity rows. */
@@ -697,8 +720,8 @@
     text-transform: none;
 }
 #all-select {
-    padding: 14px 0 14px 0 !important;
-    margin-top: 8px;
+    padding: 10px 0 !important;
+    margin-top: 0;
     border-top: 1px solid rgba(0, 36, 48, 0.08);
     text-align: center;
     line-height: 1;
