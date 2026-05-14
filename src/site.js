@@ -398,13 +398,13 @@ function addPolygonLayers() {
             'match',
             ['get', config.color_association.field],
             ...Object.keys(config.color_association.values).flatMap(key => [key, config.color_association.values[key]]),
-            '#000000'
+            '#002430'
         ];
         outlinePaint['line-color'] = [
             'match',
             ['get', config.color_association.field],
             ...Object.keys(config.color_association.values).flatMap(key => [key, config.color_association.values[key]]),
-            '#000000'
+            '#002430'
         ];
     }
 
@@ -469,7 +469,7 @@ function addLineLayers() {
             'match',
             ['get', config.color_association.field],
             ...Object.keys(config.color_association.values).flatMap(key => [key, config.color_association.values[key]]),
-            '#000000'
+            '#002430'
         ];
     }
 
@@ -535,7 +535,7 @@ function addPointLayers() {
             'match',
             ['get', config.color_association.field],
             ...Object.keys(config.color_association.values).flatMap(key => [key, config.color_association.values[key]]),
-            '#000000'
+            '#002430'
         ];
     }
 
@@ -673,7 +673,7 @@ function addPointLayers() {
             'text-size': 14
         },
         'paint': {
-            'text-color': '#000000',
+            'text-color': '#3a4a50',
             'text-halo-color': 'hsla(220, 8%, 100%, 0.75)',
             'text-halo-width': 1
         }
@@ -1325,7 +1325,7 @@ function displayDetails(features) {
 
     Object.keys(config.detailView).forEach((detail) => {
         const value = features[0].properties[detail];
-        const invalidValues = ['', 'unknown', 'unknown [unknown %]', 'undefined', 'nan', null, 0, []];
+        const invalidValues = ['', 'unknown', 'unknown [unknown %]', 'undefined', 'nan', null, undefined, 0, []];
         if (invalidValues.includes(value) || Number.isNaN(value)) {
             detail_text += ''
         } else if (Object.keys(config.detailView[detail]).includes('display')) {

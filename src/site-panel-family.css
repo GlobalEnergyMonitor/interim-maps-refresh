@@ -1,0 +1,1204 @@
+/* ─────────────────────────────────────────────────────────────────
+   Panel family.
+
+   Two anchored panels frame the map as a matched pair:
+   • Navbar  (top-left)    — segmented instrument; signature corner 0/10/10/10
+   • Legend  (bottom-left) — reference card;       inverse  corner 10/10/10/0
+   The two corners point inward at the map.
+
+   Shared atlas register: tabular numerals, 4% midnight hover,
+   mint reserved for active state, hairline rules.
+   ───────────────────────────────────────────────────────────────── */
+:root {
+    --panel-surface: #ffffff;
+    --panel-border: rgba(0, 36, 48, 0.22);
+    --panel-shadow: 0 6px 18px rgba(0, 36, 48, 0.18);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   NAVBAR — top-left floating segmented instrument
+   ═══════════════════════════════════════════════════════════════════ */
+.navbar.fixed-bottom {
+    /* override Bootstrap fixed-bottom positioning */
+    top: 16px;
+    bottom: auto;
+    left: 16px;
+    right: auto;
+    width: auto;
+    max-width: calc(100vw - 32px);
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    opacity: 1;
+    z-index: 5;
+}
+.navbar.fixed-bottom .container-fluid {
+    padding: 0;
+}
+.navbar.fixed-bottom .collapse.navbar-collapse {
+    background: var(--panel-surface);
+    border: 1px solid var(--panel-border);
+    border-radius: 0 10px 10px 10px; /* signature */
+    padding: 0;
+    gap: 0;
+    align-items: center;
+    box-shadow: var(--panel-shadow);
+    overflow: visible; /* let dropdown menus escape the 40px row */
+    flex-wrap: nowrap;
+    height: 40px;
+    box-sizing: border-box;
+    letter-spacing: 0 !important; /* override bootstrap-lux body letter-spacing: 1px */
+}
+.navbar.fixed-bottom .collapse.navbar-collapse * {
+    letter-spacing: inherit;
+}
+/* All direct children sit on a 38px content rail (40 - 2 border). */
+.navbar.fixed-bottom .collapse.navbar-collapse > * {
+    height: 38px !important;
+    min-height: 38px !important;
+    max-height: 38px !important;
+    align-self: stretch !important;
+    box-sizing: border-box !important;
+}
+.navbar.fixed-bottom .collapse.navbar-collapse {
+    align-items: stretch !important;
+}
+/* site.css HACKs — `position: relative; top: 3px;` on #country, #search-form,
+   #search-type and `top: 0.5px; height: 74px;` on the action buttons —
+   were intentional for the OLD bottom-anchored navbar. They mis-align the
+   panel-family row. Reset them. */
+.navbar.fixed-bottom #country,
+.navbar.fixed-bottom #search-form,
+.navbar.fixed-bottom #search-type,
+.navbar.fixed-bottom #table-toggle,
+.navbar.fixed-bottom #basemap-toggle,
+.navbar.fixed-bottom #projection-toggle {
+    position: static !important;
+    top: auto !important;
+    bottom: auto !important;
+}
+
+/* All grouped <ul> / pill containers become flat segments */
+.navbar.fixed-bottom .navbar-nav,
+.navbar.fixed-bottom #search-form,
+.navbar.fixed-bottom #table-toggle,
+.navbar.fixed-bottom #basemap-toggle,
+.navbar.fixed-bottom #projection-toggle {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent;
+    border-right: 1px solid rgba(0, 36, 48, 0.08) !important;
+    border-left: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transition: background-color 0.12s ease;
+    display: flex;
+    align-items: center;
+    line-height: 1 !important;
+}
+.navbar.fixed-bottom #projection-toggle {
+    border-right: none !important;
+}
+
+/* Hover: 4% midnight underlay across ALL segments. Use !important + .btn
+   compound so we beat Bootstrap's `.btn:hover { var(--bs-btn-hover-bg) }`
+   that wins on the action buttons (#table-toggle/#basemap-toggle are `.btn`). */
+.navbar.fixed-bottom .navbar-nav:hover,
+.navbar.fixed-bottom #search-form:hover,
+.navbar.fixed-bottom #search-form:focus-within,
+.navbar.fixed-bottom .btn#table-toggle:hover,
+.navbar.fixed-bottom .btn#basemap-toggle:hover,
+.navbar.fixed-bottom .btn#projection-toggle:hover,
+.navbar.fixed-bottom #table-toggle:hover,
+.navbar.fixed-bottom #basemap-toggle:hover,
+.navbar.fixed-bottom #projection-toggle:hover,
+.navbar.fixed-bottom .nav-item.show,
+.navbar.fixed-bottom .nav-item.show .nav-link {
+    background-color: rgba(0, 36, 48, 0.04) !important;
+}
+
+/* Dropdown caret — Bootstrap's ::after triangle. Add a small left margin
+   so the value doesn't kiss the caret. */
+.navbar.fixed-bottom .nav-link.dropdown-toggle::after {
+    margin-left: 6px !important;
+    vertical-align: middle !important;
+    border-top-color: var(--color-midnight);
+    opacity: 0.7;
+}
+
+/* Per-segment text — single inline row "Region: ALL ▾".
+   Tight right padding on dropdown pills so the caret sits flush with the
+   pill edge and there's no visually empty area inside the click target. */
+.navbar.fixed-bottom .nav-link,
+.navbar.fixed-bottom .btn-secondary {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 14px !important;
+    height: 38px !important;
+    line-height: 1 !important;
+    color: var(--color-midnight) !important;
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    gap: 6px;
+    border-radius: 0 !important;
+}
+/* Bootstrap-lux sets `.nav-item { margin-right: 2rem }`, which leaves a
+   32px non-clickable gap to the right of each navbar pill. Zero it out so
+   the visible pill IS the click target. */
+.navbar.fixed-bottom .nav-item {
+    margin-right: 0 !important;
+}
+.navbar.fixed-bottom #basemap-toggle,
+.navbar.fixed-bottom #projection-toggle,
+.navbar.fixed-bottom #table-toggle {
+    /* action buttons */
+    flex-direction: row !important;
+    align-items: center !important;
+    padding: 0 16px !important;
+    margin: 0 !important;
+    line-height: 1 !important;
+    box-shadow: none !important;
+    color: var(--color-midnight) !important;
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+}
+
+/* Inline eyebrow prefix: "Region:" sentence-case, then value */
+.navbar.fixed-bottom .nav-link.dropdown-toggle .small {
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    color: var(--color-text) !important;
+    opacity: 0.7;
+    line-height: 1 !important;
+    margin: 0 4px 0 0 !important;
+    display: inline !important;
+}
+.navbar.fixed-bottom .nav-link.dropdown-toggle br {
+    display: none !important;
+}
+
+/* The value (#selectedCountryLabel / #selectedSearchLabel) — bump specificity
+   to beat Bootstrap's .h3 utility (font-size: 1.75rem). Use #navbarDropdown /
+   #searchbarDropdown ID parents + .h3 to land at higher specificity. */
+.navbar.fixed-bottom .nav-item .h3,
+.navbar.fixed-bottom #selectedCountryLabel,
+.navbar.fixed-bottom #selectedSearchLabel {
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: var(--color-midnight) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1 !important;
+    letter-spacing: 0 !important;
+    font-variant-numeric: tabular-nums;
+    display: inline !important;
+    text-transform: capitalize !important; /* "all" -> "All" */
+}
+
+/* Action button SVG icons — site.js sets inline width="15" height="50",
+   we have to override both. Basemap "layer.svg" has thin strokes so it reads
+   undersized at 14px; bump it slightly relative to the others. */
+.navbar.fixed-bottom #table-toggle img,
+.navbar.fixed-bottom #basemap-toggle img,
+.navbar.fixed-bottom #projection-toggle img {
+    height: 15px !important;
+    width: 15px !important;
+    margin-left: 6px;
+    opacity: 0.6;
+    flex: 0 0 auto;
+}
+.navbar.fixed-bottom #basemap-toggle img {
+    /* layer.svg has thin strokes — bump optical size */
+    height: 17px !important;
+    width: 17px !important;
+}
+
+/* Search input segment */
+.navbar.fixed-bottom #search-form {
+    padding: 0 14px !important;
+    align-items: center;
+    margin: 0 !important;
+}
+.navbar.fixed-bottom #search-form .btn-close,
+.navbar.fixed-bottom #search-form button[aria-label="Close"] {
+    /* keep clear button vertically centered if/when it appears */
+    margin: 0 0 0 4px !important;
+    align-self: center;
+}
+.navbar.fixed-bottom #search-text {
+    border: none !important;
+    background: transparent !important;
+    height: 36px !important;
+    line-height: 36px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 13px !important;
+    color: var(--color-midnight) !important;
+    padding: 0 4px !important;
+    width: 160px;
+    font-variant-numeric: tabular-nums;
+    margin: 0 !important;
+}
+.navbar.fixed-bottom #search-text::placeholder {
+    color: rgba(58, 74, 80, 0.5);
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+}
+.navbar.fixed-bottom #search-text:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/* Country segment minimum width */
+.navbar.fixed-bottom #country { min-width: 0; }
+
+/* ── Dropdown menu styling — matches panel family ── */
+.navbar.fixed-bottom .dropdown-menu {
+    background-color: var(--panel-surface) !important;
+    border: 1px solid var(--panel-border) !important;
+    border-radius: 10px !important;
+    box-shadow: var(--panel-shadow) !important;
+    padding: 6px 0 !important;
+    margin-top: 4px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    min-width: 180px;
+}
+/* Dropdown items — site.js uses Bootstrap heading classes (.h5/.h4) which
+   override our base .dropdown-item rules (font-size 1.25rem, weight 500,
+   weird line-height, margin-bottom). Target those classes directly. */
+.navbar.fixed-bottom .dropdown-menu .dropdown-item,
+.navbar.fixed-bottom .dropdown-menu li > a,
+.navbar.fixed-bottom .dropdown-menu .dropdown-item.h5,
+.navbar.fixed-bottom .dropdown-menu .dropdown-item.h4,
+.navbar.fixed-bottom .dropdown-menu .dropdown-item.h6,
+.navbar.fixed-bottom .dropdown-menu a.h5,
+.navbar.fixed-bottom .dropdown-menu a.h4,
+.navbar.fixed-bottom .dropdown-menu a.h6,
+.navbar.fixed-bottom .dropdown-menu li.continent-li > a {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    color: var(--color-midnight) !important;
+    text-transform: capitalize !important; /* "all" -> "All", "start year" -> "Start Year" */
+    letter-spacing: 0 !important;
+    line-height: 1.3 !important;
+    margin: 0 !important;
+    padding: 6px 14px !important;
+    white-space: nowrap;
+}
+/* Continents in the Region menu are clickable parent items that open a
+   country sub-menu. Treat them as normal items (slightly bolder for
+   hierarchy) — NOT as headers. */
+.navbar.fixed-bottom .dropdown-menu .continent-select {
+    font-weight: 700 !important;
+}
+.navbar.fixed-bottom .dropdown-menu .continent-select::after {
+    content: "›";
+    float: right;
+    color: var(--color-midnight);
+    opacity: 0.5;
+    font-size: 16px;
+    line-height: 1;
+    margin-left: 8px;
+}
+/* Divider between "All" and the first continent ("Africa").
+   Scoped to the top-level menu (`#country_select`) only — the previous
+   `#country .dropdown-menu` selector also matched the nested `.submenu`,
+   which gave the first country (e.g. Algeria) a stray underline. */
+.navbar.fixed-bottom #country_select > li:first-child {
+    border-bottom: 1px solid rgba(0, 36, 48, 0.08);
+    padding-bottom: 6px;
+    margin-bottom: 6px;
+}
+/* Country sub-menu — same panel-family treatment as the parent menu.
+   Override site.css `.nav-item .submenu { top: -300px }` (legacy hack
+   for the old bottom-anchored navbar) so it lines up with the parent row. */
+.navbar.fixed-bottom .dropdown-menu .submenu.dropdown-menu,
+.navbar.fixed-bottom .nav-item .submenu {
+    background-color: var(--panel-surface) !important;
+    border: 1px solid var(--panel-border) !important;
+    border-radius: 10px !important;
+    box-shadow: var(--panel-shadow) !important;
+    padding: 6px 0 !important;
+    max-height: 60vh;
+    overflow-y: auto;
+    top: 0 !important; /* line up with parent item */
+    margin-left: 4px;
+}
+.navbar.fixed-bottom .dropdown-menu .dropdown-item:hover,
+.navbar.fixed-bottom .dropdown-menu li > a:hover,
+.navbar.fixed-bottom .dropdown-menu li:hover > a {
+    background-color: rgba(0, 36, 48, 0.04) !important;
+    color: var(--color-midnight) !important;
+}
+.navbar.fixed-bottom .dropdown-menu .dropdown-item.active,
+.navbar.fixed-bottom .dropdown-menu li.active > a {
+    background-color: rgba(0, 36, 48, 0.06) !important;
+    color: var(--color-midnight) !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   LEGEND (sidebar) — bottom-left, inverse signature corner
+   Same warm-white surface, same panel family.
+   ═══════════════════════════════════════════════════════════════════ */
+.sidebar.card {
+    background-color: var(--panel-surface) !important;
+    border: 1px solid var(--panel-border) !important;
+    border-radius: 10px 10px 10px 0 !important; /* INVERSE signature: sharp bottom-left */
+    box-shadow: var(--panel-shadow) !important;
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    color: var(--color-midnight);
+    letter-spacing: 0 !important; /* override bootstrap-lux body letter-spacing: 1px */
+    /* override the old rounded-top-left-1 / rounded-bottom-right-1 utility classes */
+}
+/* bootstrap-lux ships .h1...h6 { letter-spacing: 3px } and body { 1px }. Reset
+   inside the legend so numbers and labels don't get tracked apart. */
+.sidebar.card *,
+#card-body * {
+    letter-spacing: inherit;
+}
+/* but keep the eyebrow-uppercase tracking we explicitly set */
+#summary,
+#filter-form h7,
+#capacity_summary_max,
+#capacity_summary_min,
+#all-select a,
+#all-select-section-level a {
+    letter-spacing: 0.06em !important;
+}
+#summary { letter-spacing: 0.08em !important; }
+/* Override Bootstrap's m-3 to use our 16px page rhythm */
+.sidebar {
+    bottom: 16px !important;
+    left: 16px !important;
+    margin: 0 !important;
+    /* push the legend down so navbar at top has clearance from sidebar's natural top */
+}
+
+/* Override the rounded utility classes that fight our inverse corner */
+.sidebar.card.rounded-top-left-1,
+.sidebar.card.rounded-bottom-right-1 {
+    border-radius: 10px 10px 10px 0 !important;
+}
+
+#card-body {
+    padding: 10px 16px !important;
+    min-width: 320px;
+}
+/* Override Bootstrap's `.pb-3` on #filter-form so the space below the last
+   filter row (Mothballed) matches the space above the first row (Operating).
+   The capacity divider then provides its own 10px above/below. */
+#filter-form.pb-3,
+#filter-form {
+    padding-bottom: 0 !important;
+}
+
+/* Totals row — display number with eyebrow and rule.
+   Override Bootstrap's .row .col-9 + .col-3 so summary stacks above total. */
+#card-body > .row:has(#summary) {
+    display: block !important;
+    border-bottom: 1px solid rgba(0, 36, 48, 0.08);
+    padding-bottom: 10px;
+    margin: 0 0 10px 0 !important;
+}
+#card-body > .row:has(#summary) > [class*="col-"],
+#card-body > .row:has(#summary) > #summary,
+#card-body > .row:has(#summary) > #total_in_view {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    padding: 0 !important;
+    text-align: left !important;
+}
+#summary {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 10px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.08em !important;
+    color: var(--color-text) !important;
+    opacity: 0.6;
+    line-height: 1;
+    margin: 0 0 4px 0 !important;
+    display: block !important;
+}
+#total_in_view {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 28px !important;
+    font-weight: 700 !important;
+    color: var(--color-midnight) !important;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    margin: 0 !important;
+    display: block !important;
+    text-align: left !important;
+}
+
+/* Filter section headers (h7 used as label) */
+#filter-form h7 {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    color: var(--color-midnight) !important;
+    opacity: 0.85;
+    display: block !important;
+    margin-top: 14px !important;
+    margin-bottom: 6px !important;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 36, 48, 0.08);
+}
+/* The very first h7 section header doesn't need a top divider */
+#filter-form h7:first-of-type,
+#filter-form > h7:nth-of-type(1) {
+    border-top: none;
+    padding-top: 0;
+    margin-top: 6px !important;
+}
+/* site.js inserts a bare <hr> between filter sections — that gives a second
+   line right above the h7 border-top. Hide it so we get a single hairline. */
+#filter-form > hr,
+#card-body > hr,
+.sidebar.card hr {
+    display: none !important;
+}
+
+/* Filter rows — tighten density, tabular-nums on counts.
+   Avoid adding padding to .row (it breaks Bootstrap col widths and wraps);
+   instead pad the inner cols and let the row stay zero-padding. */
+.filter-row {
+    padding: 0 !important;
+    margin: 2px 0 !important;
+    border-radius: 0 !important;
+    line-height: 1.2 !important;
+    font-size: 13px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    color: var(--color-midnight);
+    font-variant-numeric: tabular-nums;
+    transition: background-color 0.12s ease;
+}
+/* Force a clean 3-col flex layout; ignore bootstrap col widths */
+.filter-row {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 8px;
+    padding: 5px 8px !important;
+    margin: 1px 0 !important;
+    min-height: 26px;
+}
+.filter-row > .col-1 { flex: 0 0 18px !important; max-width: 18px; padding: 0 !important; display: flex; align-items: center; justify-content: center; }
+.filter-row > .col-8 {
+    flex: 1 1 auto !important;
+    max-width: none;
+    padding: 0 !important;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.filter-row > .col-3 {
+    flex: 0 0 auto !important;
+    max-width: none;
+    padding: 0 !important;
+    text-align: right !important;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    font-weight: 600;
+    margin-left: auto;
+    line-height: 1;
+}
+
+/* The col-1.checkmark / .uncheckmark slot is the VISUAL toggle
+   (the real <input> is .d-none by design — site.js toggles class
+   on the col-1 between .checkmark and .uncheckmark).
+   Painted in CSS so it doesn't depend on bitmap SVGs and aligns
+   crisply on the panel family. */
+.filter-row > .col-1 {
+    width: 14px !important;
+    height: 14px !important;
+    min-height: 14px;
+    flex: 0 0 14px !important;
+    max-width: 14px !important;
+    border: 1.5px solid rgba(0, 36, 48, 0.45);
+    border-radius: 3px;
+    background-color: var(--panel-surface) !important;
+    background-image: none !important; /* override site.css svg backgrounds */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 12px 12px;
+    box-sizing: border-box;
+    transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+/* Checked = filled with midnight + white tick */
+.filter-row > .col-1.checkmark {
+    background-color: var(--color-midnight) !important;
+    border-color: var(--color-midnight);
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath fill='none' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' d='M3 7.5l2.5 2.5L11 4.5'/%3E%3C/svg%3E") !important;
+}
+/* Unchecked = empty box */
+.filter-row > .col-1.uncheckmark {
+    background-color: var(--panel-surface) !important;
+    background-image: none !important;
+    border-color: rgba(0, 36, 48, 0.45);
+}
+.filter-row:hover > .col-1 {
+    border-color: var(--color-midnight);
+}
+
+/* The status color swatch sits inline with the label.
+   Make sure swatches and labels align vertically. */
+.filter-row label {
+    margin: 0 !important;
+    line-height: 1.2;
+    font-size: 13px;
+    color: var(--color-midnight);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.filter-row label .legend-color,
+.filter-row label .swatch,
+.filter-row label .color-swatch,
+.filter-row label img,
+.filter-row label svg,
+.filter-row label .legend-dot,
+.legend-dot,
+.filter-row .col-8 .legend-dot {
+    flex-shrink: 0 !important;
+}
+/* legend-dot: lock to 10x10 so long labels can't squeeze it. site.css sets
+   width/height: 10px without !important, but inside flex contexts the dot
+   shrinks to ~4px when the row is tight. */
+.legend-dot {
+    width: 10px !important;
+    height: 10px !important;
+    min-width: 10px;
+    align-self: center;
+}
+/* The legend dot and label text are siblings inside .col-8 (NOT inside a
+   <label> element — site.js renders an invisible <input> + <span class=
+   "legend-dot"> + <span id="...-label">text</span>). For long labels, we
+   want the text to wrap to a second line WITHIN its own column while the
+   dot stays anchored at the start of line 1. Keep .col-8 a single-row flex
+   (nowrap), let the text span itself wrap. */
+.filter-row > .col-8 {
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    min-width: 0;
+}
+.filter-row > .col-8 > span:not(.legend-dot):not(.swatch):not(.color-swatch):not(.legend-color),
+.filter-row > .col-8 > [id$="-label"] {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    line-height: 1.25;
+}
+.filter-row:hover {
+    background-color: rgba(0, 36, 48, 0.04) !important;
+}
+/* No mint highlight — keep filter rows neutral. */
+/* Counts within filter rows: right-align */
+.filter-row .col-3,
+.filter-row [class*="text-end"],
+.filter-row .text-end {
+    text-align: right !important;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+    font-weight: 600;
+}
+
+/* Capacity summary rows — restructure both <div class="row"> wrappers that
+   contain #capacity_summary_max/#max_capacity and the min pair into flex
+   rows whose value column right-aligns to the SAME visual column as the
+   filter-row counts above. Without :has() we can't target the row from the
+   value, so target via id. The row is the parent of #capacity_summary_max
+   and #capacity_summary_min. */
+#card-body .row:has(#capacity_summary_max),
+#card-body .row:has(#capacity_summary_min) {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    align-items: center !important;
+    gap: 12px;
+    margin: 0 !important;
+    padding: 3px 8px !important;
+    min-height: 24px;
+}
+#capacity_summary_max,
+#capacity_summary_min {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    color: var(--color-midnight) !important;
+    opacity: 0.7;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    flex: 1 1 auto !important;
+    max-width: none !important;
+    padding: 0 !important;
+    line-height: 18px !important;
+    margin: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    min-height: 18px;
+}
+#max_capacity,
+#min_capacity {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: var(--color-midnight) !important;
+    flex: 0 0 auto !important;
+    max-width: none !important;
+    padding: 0 !important;
+    margin: 0 0 0 auto !important;
+    text-align: right !important;
+    font-variant-numeric: tabular-nums !important;
+    font-feature-settings: "tnum" !important;
+    line-height: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    min-height: 18px;
+}
+/* Capacity sub-block sits below a divider (a hairline when the filter form
+   is expanded, or the TOTAL row's own border when collapsed). Match the
+   10px-above / 10px-below rhythm used at the Total-row divider so all
+   dividers in the card share uniform spacing. */
+#card-body .row:has(#capacity_summary_max) {
+    margin-top: 10px !important;
+    padding-top: 10px !important;
+    padding-bottom: 3px !important;
+}
+/* Tight pairing between Max/Min rows — gap stays smaller than the 10px
+   around the dividers so the pair reads as a group. */
+#card-body .row:has(#capacity_summary_min) {
+    margin-top: 0 !important;
+    padding-top: 3px !important;
+    padding-bottom: 0 !important;
+}
+/* Only show the capacity divider when the filter form is sitting between
+   the TOTAL row and the capacity rows. */
+#card-body:has(#filter-form:not([style*="display: none"])) .row:has(#capacity_summary_max) {
+    border-top: 1px solid rgba(0, 36, 48, 0.08);
+}
+
+/* select all / clear all links */
+#all-select a,
+#all-select-section-level a {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 600 !important;
+    color: var(--color-teal);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+#all-select a:hover,
+#all-select-section-level a:hover {
+    color: var(--color-navy);
+    text-decoration: underline;
+}
+#all-select-section-level {
+    opacity: 0.85 !important;
+    font-size: 10px !important;
+    padding: 0 0 6px 0 !important;
+    margin-bottom: 4px;
+    text-transform: none;
+}
+#all-select {
+    padding: 10px 0 !important;
+    margin-top: 0;
+    border-top: 1px solid rgba(0, 36, 48, 0.08);
+    text-align: center;
+    line-height: 1;
+    /* Render the row as a flex line so the pipe text node sits on the same
+       baseline as the anchors (the legacy markup is inline anchors with a
+       bare ' | ' text node — vertical rhythm comes from line-height + the
+       anchor flex centering). */
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+#all-select a {
+    line-height: 1;
+    display: inline-block;
+}
+/* The bare " | " text node between the two anchors — style it as a thin
+   muted divider that sits at the same height as the link text. */
+#all-select::before {
+    content: "";
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   MAPBOX CONTROLS — push attribution back to the BOTTOM
+   site.css:169-183 has a legacy hack that pinned bottom-right and
+   bottom-left to top:0 (so they sat above the OLD bottom-anchored
+   navbar). Now that the navbar is at the top, we want attribution
+   at the bottom of the map.
+   ═══════════════════════════════════════════════════════════════════ */
+.mapboxgl-ctrl-bottom-right {
+    top: auto !important;
+    bottom: 0 !important;
+    right: 0 !important;
+    left: auto !important;
+    z-index: 2 !important;
+}
+/* Mapbox logo lives in bottom-left. The legend also lives in bottom-left,
+   so shift the logo container to the right past the legend's footprint
+   (sidebar default min-width 320px + 16px page margin + 8px gap). */
+.mapboxgl-ctrl-bottom-left {
+    top: auto !important;
+    bottom: 0 !important;
+    left: 360px !important;
+    right: auto !important;
+    z-index: 2 !important;
+}
+/* Tone down the attribution chip to match the panel family */
+.mapboxgl-ctrl-attrib {
+    background: rgba(255, 255, 255, 0.85) !important;
+    border-radius: 6px 0 0 0 !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 11px !important;
+}
+.mapboxgl-ctrl-attrib a,
+.mapboxgl-ctrl-attrib-inner a {
+    color: var(--color-midnight) !important;
+    opacity: 0.8;
+}
+/* Zoom controls — match panel family */
+.mapboxgl-ctrl-top-right .mapboxgl-ctrl-group {
+    background: var(--panel-surface) !important;
+    border: 1px solid var(--panel-border) !important;
+    box-shadow: var(--panel-shadow) !important;
+    border-radius: 10px !important;
+    overflow: hidden;
+    margin: 16px 16px 0 0 !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   TABLE VIEW — DataTable inside #table-container
+   The table fills the viewport when "Map view" toggles to table view.
+   Apply panel-family typography, color, and row treatment so it sits in
+   the same visual register as the map UI.
+   ═══════════════════════════════════════════════════════════════════ */
+/* The table view is shown by site.js toggling #table-container { display: block }.
+   site.css has it at `display: none; padding: 50px` and #table at
+   `position: absolute; top:0; bottom:0`. Reframe: make #table-container fill
+   the viewport (so scrolling works) and let the wrapper/table flow normally. */
+#table-container {
+    background: var(--color-warm-white, #f7f4ee) !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    padding: 72px 32px 32px 32px !important;
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif !important;
+    color: var(--color-midnight) !important;
+    font-size: 13px !important;
+    overflow: auto !important;
+    z-index: 4 !important; /* below navbar (z:5), above map */
+}
+/* Override site.css `#table { position: absolute; top:0; bottom:0 }` */
+#table-container #table {
+    position: static !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    padding-bottom: 0 !important;
+    margin: 0 !important;
+}
+#table-container table.dataTable,
+#table-container #table {
+    background: var(--panel-surface) !important;
+    border: 1px solid var(--panel-border) !important;
+    border-radius: 10px !important;
+    box-shadow: var(--panel-shadow) !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    overflow: hidden;
+}
+/* DataTables wraps the table in #table_wrapper — let it flow */
+#table-container .dataTables_wrapper {
+    position: static !important;
+}
+/* Reset bootstrap-lux body letter-spacing: 1px inside the table view */
+#table-container,
+#table-container * {
+    letter-spacing: 0 !important;
+}
+/* Header row — allow text to wrap (some labels are long like
+   "SUBNATIONAL UNIT (PROVINCE, STATE)"). Middle-align so multi-line
+   headers center vertically against single-line headers. */
+#table-container table.dataTable thead th {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: var(--color-midnight) !important;
+    background: var(--panel-surface) !important;
+    border-bottom: 1.5px solid rgba(0, 36, 48, 0.18) !important;
+    padding: 14px 24px 14px 12px !important; /* room on right for sort caret */
+    vertical-align: middle !important;
+    white-space: normal !important;
+    word-break: normal;
+    line-height: 1.3 !important;
+    min-width: 60px;
+}
+#table-container table.dataTable thead th.sorting,
+#table-container table.dataTable thead th.sorting_asc,
+#table-container table.dataTable thead th.sorting_desc {
+    cursor: pointer;
+}
+/* Body rows */
+#table-container table.dataTable tbody tr {
+    background: var(--panel-surface) !important;
+    border: none !important;
+    transition: background-color 0.12s ease;
+}
+#table-container table.dataTable tbody tr.odd {
+    background: rgba(0, 36, 48, 0.03) !important;
+}
+#table-container table.dataTable tbody tr:hover {
+    background: rgba(0, 36, 48, 0.06) !important;
+}
+#table-container table.dataTable tbody td {
+    padding: 10px 12px !important;
+    border-top: 1px solid rgba(0, 36, 48, 0.06) !important;
+    border-bottom: none !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 13px !important;
+    color: var(--color-midnight) !important;
+    line-height: 1.3 !important;
+    vertical-align: middle !important;
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+}
+#table-container table.dataTable tbody td a {
+    color: var(--color-teal, #0a7a73) !important;
+    text-decoration: none;
+    font-weight: 600;
+}
+#table-container table.dataTable tbody td a:hover {
+    text-decoration: underline;
+}
+/* DataTables wrapper (info, search, length-menu) */
+#table-container .dataTables_wrapper {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 13px !important;
+    color: var(--color-midnight) !important;
+}
+#table-container .dataTables_wrapper .dataTables_info,
+#table-container .dataTables_wrapper .dataTables_length,
+#table-container .dataTables_wrapper .dataTables_filter {
+    margin: 12px 0;
+    color: var(--color-midnight) !important;
+    opacity: 0.8;
+}
+#table-container .dataTables_wrapper .dataTables_filter input,
+#table-container .dataTables_wrapper .dataTables_length select {
+    border: 1px solid var(--panel-border) !important;
+    border-radius: 6px !important;
+    padding: 4px 10px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 13px !important;
+    color: var(--color-midnight) !important;
+    background: var(--panel-surface) !important;
+    margin-left: 6px;
+}
+/* Pagination */
+#table-container .pagination {
+    margin: 16px 0;
+    gap: 4px;
+}
+#table-container .page-item .page-link,
+#table-container .pagination .page-link {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    color: var(--color-midnight) !important;
+    border: 1px solid var(--panel-border) !important;
+    border-radius: 6px !important;
+    margin: 0 2px;
+    padding: 6px 12px !important;
+    background: var(--panel-surface) !important;
+    transition: background-color 0.12s ease;
+}
+#table-container .page-item .page-link:hover {
+    background: rgba(0, 36, 48, 0.04) !important;
+    color: var(--color-midnight) !important;
+}
+#table-container .page-item.active .page-link {
+    background: var(--color-midnight) !important;
+    color: #ffffff !important;
+    border-color: var(--color-midnight) !important;
+}
+#table-container .page-item.disabled .page-link {
+    opacity: 0.4;
+    background: var(--panel-surface) !important;
+}
+/* Sort arrows in header — DataTables uses pseudo-elements; tone them down */
+#table-container table.dataTable thead .sorting:before,
+#table-container table.dataTable thead .sorting:after,
+#table-container table.dataTable thead .sorting_asc:before,
+#table-container table.dataTable thead .sorting_asc:after,
+#table-container table.dataTable thead .sorting_desc:before,
+#table-container table.dataTable thead .sorting_desc:after {
+    color: var(--color-midnight) !important;
+    opacity: 0.4;
+}
+#table-container table.dataTable thead .sorting_asc:before,
+#table-container table.dataTable thead .sorting_desc:after {
+    opacity: 1 !important;
+}
+
+
+/* ═══════════════════════════════════════════════════════════════════
+   DETAIL MODAL — plant/asset popup
+   The modal-body is split: left = satellite image with location pill,
+   right = #total_in_view with the heading + label/value rows + capacity
+   table. site.css ships baseline styles; we refine to the panel family.
+   Note: site.js gives the right column id="total_in_view" — same id as
+   the legend's count display, so all selectors must scope to #modal-body.
+   ═══════════════════════════════════════════════════════════════════ */
+#modal .modal-dialog {
+    max-width: 760px !important;
+}
+#modal .modal-content {
+    background-color: var(--panel-surface) !important;
+    border: 1px solid var(--panel-border) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--panel-shadow) !important;
+    overflow: hidden;
+    letter-spacing: 0 !important;
+}
+#modal .modal-content * {
+    letter-spacing: inherit;
+}
+#modal .modal-body {
+    padding: 0 !important;
+    background-color: var(--panel-surface) !important;
+}
+/* Inner row holds two columns: <div class="col-sm-5"> satellite, <div class="col-sm-7"> details. */
+#modal .modal-body > .row { margin: 0 !important; }
+#modal .modal-body > .row > [class*="col-"] { padding: 0 !important; }
+
+/* Satellite image (left column) */
+#modal #detail-satellite {
+    background-size: cover !important;
+    background-position: center !important;
+    min-height: 320px !important;
+    border-radius: 0 !important;
+    position: relative;
+    overflow: hidden;
+}
+/* Subtle gradient overlay to anchor the location pill and MORE INFO button */
+#modal #detail-satellite::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 36, 48, 0.18) 0%, rgba(0, 36, 48, 0) 30%, rgba(0, 36, 48, 0) 60%, rgba(0, 36, 48, 0.55) 100%);
+    pointer-events: none;
+}
+#modal #detail-location-pin {
+    position: absolute;
+    top: 12px;
+    right: 44px;
+    width: 18px !important;
+    height: auto;
+    z-index: 2;
+    float: none !important;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+}
+#modal .detail-location {
+    position: absolute;
+    top: 14px;
+    right: 68px;
+    background-color: rgba(0, 36, 48, 0.78) !important;
+    color: #ffffff !important;
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    padding: 4px 10px !important;
+    border-radius: 6px !important;
+    letter-spacing: 0 !important;
+    text-transform: none !important;
+    z-index: 2;
+    float: none !important;
+    backdrop-filter: blur(4px);
+}
+#modal #modal-back {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 22px !important;
+    height: auto;
+    z-index: 2;
+    cursor: pointer;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.4));
+}
+#modal #detail-more-info,
+#modal #detail-all-phases {
+    position: absolute;
+    bottom: 12px;
+    background-color: var(--color-teal, #016b83) !important;
+    border-radius: 6px !important;
+    padding: 6px 12px !important;
+    transition: background-color 0.15s ease;
+    z-index: 2;
+}
+#modal #detail-more-info { right: 12px; }
+#modal #detail-all-phases { right: 110px; }
+#modal #detail-more-info:hover,
+#modal #detail-all-phases:hover {
+    background-color: var(--color-navy, #004a63) !important;
+}
+#modal #detail-more-info a,
+#modal #detail-all-phases a {
+    text-decoration: none !important;
+    color: #ffffff !important;
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 11px !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+/* Right column — details */
+#modal #total_in_view,
+#modal-body #total_in_view {
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif !important;
+    color: var(--color-midnight) !important;
+    font-size: 13px !important;
+    font-weight: 500 !important;
+    line-height: 1.55 !important;
+    padding: 22px 24px !important;
+    letter-spacing: 0 !important;
+    background-color: var(--panel-surface) !important;
+}
+/* Plant name heading inside the modal */
+#modal #total_in_view h4 {
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    color: var(--color-midnight) !important;
+    line-height: 1.25 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    margin: 0 0 14px 0 !important;
+    padding: 0 0 12px 0 !important;
+    border-bottom: 1px solid rgba(0, 36, 48, 0.08);
+}
+/* Label/value rows — site.js emits <span class="fw-bold">Label</span>: value<br/>.
+   Style the bold span as a small eyebrow-ish label and tighten the rows. */
+#modal #total_in_view .fw-bold {
+    color: var(--color-midnight) !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+    letter-spacing: 0 !important;
+}
+#modal #total_in_view br {
+    /* Use line spacing instead of <br/> to drive vertical rhythm */
+    line-height: 1.6;
+}
+
+/* Capacity by Status table */
+#modal #total_in_view table.table {
+    width: 100% !important;
+    margin: 12px 0 0 0 !important;
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    border: 1px solid rgba(0, 36, 48, 0.10) !important;
+    border-radius: 8px !important;
+    overflow: hidden;
+    font-size: 12px !important;
+    background: var(--panel-surface) !important;
+}
+#modal #total_in_view table.table thead {
+    background: rgba(0, 36, 48, 0.04) !important;
+}
+#modal #total_in_view table.table thead th {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: var(--color-midnight) !important;
+    padding: 8px 10px !important;
+    border: none !important;
+    border-bottom: 1px solid rgba(0, 36, 48, 0.10) !important;
+    vertical-align: middle !important;
+    line-height: 1.3 !important;
+}
+#modal #total_in_view table.table tbody td {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 12px !important;
+    color: var(--color-midnight) !important;
+    padding: 7px 10px !important;
+    border: none !important;
+    border-top: 1px solid rgba(0, 36, 48, 0.06) !important;
+    vertical-align: middle !important;
+    text-transform: capitalize;
+    font-variant-numeric: tabular-nums;
+}
+#modal #total_in_view table.table tbody tr:first-child td {
+    border-top: none !important;
+}
+/* Capacity-by-status section header (the small <div> above the table) */
+#modal #total_in_view table.table + br,
+#modal #total_in_view br + br {
+    display: none;
+}
+#modal #total_in_view > div[style*="font-weight: 600"] {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    color: var(--color-midnight) !important;
+    opacity: 0.85;
+    margin-top: 12px !important;
+    margin-bottom: 4px !important;
+    padding-top: 10px;
+    border-top: 1px solid rgba(0, 36, 48, 0.08);
+}
+
+/* Capacity rows for multi-unit projects (uses Bootstrap .row + .col-N).
+   The aggregated block builds .row > .col-5/.col-4/.col-3 grids inline.
+   Ensure they read cleanly inside the modal. */
+#modal #total_in_view .row {
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+}
+#modal #total_in_view .legend-dot {
+    width: 8px !important;
+    height: 8px !important;
+    margin-right: 6px !important;
+    vertical-align: middle;
+}
+
+/* "Status: <dot> operating" single-feature row */
+#modal #total_in_view .text-capitalize { text-transform: capitalize !important; }
